@@ -1,0 +1,77 @@
+.sidebarheading {
+  text-align: center;
+  display: block;
+  padding: 4px;
+  background-color: #1727a3;
+  color: #ffffff;
+  border: 2px solid #1727ae;
+}
+
+.mainbox {
+  height: 86%;
+  background-color: #ffffff;
+  border: 2px solid #1727ae;
+  margin-top: 2px;
+}
+
+.closebtn:hover {
+  background-color: #b10041 !important;
+  border: #b10041 1px solid !important;
+  transition: background-color 0.1s, border 0.1s;
+}
+
+.addnewbutton {
+  color: #fff;
+  background-color: #1727ae;
+  margin: 2px;
+  border: 1px solid #1727ae;
+  border-radius: 10px;
+  font-weight: 600;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  transition: all 0.2s ease-in-out;
+}
+
+.addnewbutton:hover {
+  background-color: #2c43b8;
+}
+
+.tableheader {
+  color: #fff;
+  background-color: #1727ae;
+  margin: 2px;
+  border: 1px solid #1727ae;
+  border-radius: 10px;
+  font-weight: 600;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.tablerow {
+  color: #444;
+  background-color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  margin: 2px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* For Mobile */
+.mainpage {
+}
+
+@media only screen and (min-width: 768px) {
+  /*For Desktop*/
+  .mainpage {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    margin-top: 7px;
+  }
+}
+
+input:hover {
+  background-color: #eee;
+}
