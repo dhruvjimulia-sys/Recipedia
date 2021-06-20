@@ -75,3 +75,7 @@
 input:hover {
   background-color: #eee;
 }
+
+.tablerow:hover {
+  background-color: #eee;
+}

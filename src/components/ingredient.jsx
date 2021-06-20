@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "../styles/autocomplete.css";
 import "../styles/style.css";
 import "../styles/scrollbar.css";
+import "../styles/dropdown.css";
 
 const ingred = [
   "Apple",
@@ -162,24 +163,32 @@ class Ingredient extends Component {
                 height: "100%",
                 paddingTop: "4px",
                 paddingBottom: "4px",
+                textAlign: "center",
                 paddingLeft: "10px",
-                textAlign: "left",
               }}
               className="tablerow"
+              type="number"
+              step="0.1"
+              id={"amount " + this.props.id}
+              title="This value must be a number."
+              onKeyDown={(e) =>
+                e.key === "e" ||
+                (document.getElementById("amount " + this.props.id).value < 0 &&
+                  e.preventDefault())
+              }
             />
           </div>
           <div>
-            <input
+            <button
               style={{
                 width: "92%",
                 height: "100%",
                 paddingTop: "4px",
                 paddingBottom: "4px",
-                paddingLeft: "10px",
-                textAlign: "left",
+                textAlign: "center",
               }}
-              className="tablerow"
-            ></input>
+              className="tablerow unit-dropdown"
+            ></button>
           </div>
         </React.Fragment>
       );
