@@ -41,6 +41,8 @@ class IngredientList extends Component {
               noOfIngredients={this.props.list.length}
               enterAmts={this.props.enterAmounts}
               isInclude={this.props.isInclude}
+              onAmountEntry={this.props.onAmountEntry}
+              onUnitEntry={this.props.onUnitEntry}
             ></Ingredient>
           ))}
         </div>

@@ -72,8 +72,10 @@
   }
 }
 
-input:hover {
+input:hover,
+button:hover {
   background-color: #eee;
+  border: solid 1px #1727ae;
 }
 
 .tablerow:hover {

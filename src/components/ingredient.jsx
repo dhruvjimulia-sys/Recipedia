@@ -15,11 +15,15 @@ const ingred = [
   "Application",
 ];
 
+const unitTypes = ["cups", "kg", "g"];
+
 class Ingredient extends Component {
   state = {
     ingredientInputValue: "",
     ingredientFieldFocused: false,
     autocompleteFieldHovered: false,
+    buttonActivated: false,
+    dropdownFieldHovered: false,
   };
 
   render() {
@@ -39,8 +43,12 @@ class Ingredient extends Component {
       ? "1.5fr 6fr 3fr 3fr 1fr"
       : "1.5fr 12fr 1fr";
 
-    const dropDownState =
-      this.state.ingredientInputValue !== "" ? " dropd" : "";
+    // For the change in border radius effect on focus
+    const autoCompleteState =
+      this.state.ingredientInputValue !== "" &&
+      this.state.ingredientFieldFocused
+        ? "focusedfield"
+        : "";
 
     return (
       <div
@@ -79,7 +87,7 @@ class Ingredient extends Component {
               paddingLeft: "10px",
               textAlign: "left",
             }}
-            className={"tablerow " + dropDownState}
+            className={"tablerow " + autoCompleteState}
             id={(isInclude ? "include" : "exclude") + "Ingredient " + id}
             placeholder="Type here..."
             autoComplete="off"
@@ -169,16 +177,25 @@ class Ingredient extends Component {
               className="tablerow"
               type="number"
               step="0.1"
-              id={"amount " + this.props.id}
-              title="This value must be a number."
+              min="0.1"
+              id={"includeIngredientAmount " + this.props.id}
+              title="This value must be a greater than 0"
               onKeyDown={(e) =>
                 e.key === "e" ||
-                (document.getElementById("amount " + this.props.id).value < 0 &&
+                (document.getElementById(
+                  "includeIngredientAmount " + this.props.id
+                ).value < 0 &&
                   e.preventDefault())
               }
+              onInput={() => {
+                const inputValue = document.getElementById(
+                  "includeIngredientAmount " + this.props.id
+                ).value;
+                this.props.onAmountEntry(this.props.id, inputValue);
+              }}
             />
           </div>
-          <div>
+          <div className="autocomplete">
             <button
               style={{
                 width: "92%",
@@ -186,9 +203,20 @@ class Ingredient extends Component {
                 paddingTop: "4px",
                 paddingBottom: "4px",
                 textAlign: "center",
+                outline: "none",
               }}
-              className="tablerow unit-dropdown"
+              className={
+                "tablerow " + (this.state.buttonActivated ? "focusedfield" : "")
+              }
+              onClick={() => this.setState({ buttonActivated: true })}
+              onBlur={() => {
+                if (!this.state.dropdownFieldHovered) {
+                  this.setState({ buttonActivated: false });
+                }
+              }}
+              id={"includeIngredientUnit " + this.props.id}
             ></button>
+            {this.renderUnitDropdown()}
           </div>
         </React.Fragment>
       );
@@ -243,6 +271,33 @@ class Ingredient extends Component {
               <strong>
                 {autoValue.substr(this.state.ingredientInputValue.length)}
               </strong>
+            </div>
+          ))}
+        </div>
+      );
+    }
+  }
+
+  renderUnitDropdown() {
+    if (!this.state.buttonActivated) {
+      return <React.Fragment></React.Fragment>;
+    } else {
+      return (
+        <div className="autocomplete-items">
+          {unitTypes.map((dropDownValue) => (
+            <div
+              onClick={() => {
+                this.props.onUnitEntry(this.props.id, dropDownValue);
+                this.setState({ buttonActivated: false });
+                this.setState({ dropdownFieldHovered: false });
+              }}
+              onMouseEnter={() => this.setState({ dropdownFieldHovered: true })}
+              onMouseLeave={() =>
+                this.setState({ dropdownFieldHovered: false })
+              }
+              key={"dropdown " + dropDownValue}
+            >
+              {dropDownValue}
             </div>
           ))}
         </div>

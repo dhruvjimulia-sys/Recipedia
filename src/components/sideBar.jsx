@@ -55,6 +55,8 @@ class SideBar extends Component {
           onEntry={this.handleEntry}
           onAdd={this.handleAddIngredient}
           onToggleButtonSwitch={this.handleToggleButton}
+          onUnitEntry={this.handleUnitEntry}
+          onAmountEntry={this.handleAmountEntry}
         />
       );
     } else {
@@ -70,7 +72,12 @@ class SideBar extends Component {
   };
 
   handleToggleButton = () => {
-    this.setState({ enterIngredientChkbox: !this.state.enterIngredientChkbox });
+    this.setState(
+      { enterIngredientChkbox: !this.state.enterIngredientChkbox },
+      () => {
+        this.renderValues();
+      }
+    );
   };
 
   handleAddIngredient = (isInclude) => {
@@ -110,32 +117,64 @@ class SideBar extends Component {
       }
     }
     isInclude
-      ? this.setState({ includeIngredients: ingredients })
-      : this.setState({ excludeIngredients: ingredients });
-    for (let i = 0; i < ingredients.length; i++) {
+      ? this.setState({ includeIngredients: ingredients }, () =>
+          this.renderValues()
+        )
+      : this.setState({ excludeIngredients: ingredients }, () =>
+          this.renderValues()
+        );
+    /*for (let i = 0; i < ingredients.length; i++) {
       const ingredId = i + 1;
       document.getElementById(
         (this.state.includePage ? "include" : "exclude") +
           "Ingredient " +
           ingredId
       ).value = ingredients[i].name;
-    }
+    }*/
   };
 
-  renderValues() {
+  renderValues = () => {
     const ingredientArray = this.state.includePage
       ? this.state.includeIngredients
       : this.state.excludeIngredients;
-    console.log(ingredientArray);
+
     for (let i = 0; i < ingredientArray.length; i++) {
       const ingredId = i + 1;
+
+      // Update ingredient name on tab change
       document.getElementById(
         (this.state.includePage ? "include" : "exclude") +
           "Ingredient " +
           ingredId
       ).value = ingredientArray[i].name;
+
+      // Update ingredient amount + unit on tab change
+      if (this.state.enterIngredientChkbox && this.state.includePage) {
+        console.log("Hello");
+        document.getElementById("includeIngredientAmount " + ingredId).value =
+          ingredientArray[i].amount;
+        document.getElementById("includeIngredientUnit " + ingredId).innerHTML =
+          ingredientArray[i].unit;
+      }
     }
-  }
+  };
+
+  handleUnitEntry = (id, unitValue) => {
+    let ingredients = this.state.includeIngredients;
+    ingredients[id - 1].unit = unitValue;
+    this.setState({ includeIngredients: ingredients });
+    document.getElementById("includeIngredientUnit " + id).innerText =
+      unitValue;
+    console.log(document.getElementById("includeIngredientUnit " + id).value);
+  };
+
+  handleAmountEntry = (id, amountValue) => {
+    let ingredients = this.state.includeIngredients;
+    ingredients[id - 1].amount = amountValue;
+    this.setState({ includeIngredients: ingredients });
+    document.getElementById("includeIngredientAmount " + id).value =
+      amountValue;
+  };
 }
 
 export default SideBar;

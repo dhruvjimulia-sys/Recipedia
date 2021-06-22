@@ -16,6 +16,8 @@ class IncludePage extends Component {
       onEntry,
       onAdd,
       onToggleButtonSwitch,
+      onUnitEntry,
+      onAmountEntry,
     } = this.props;
 
     return (
@@ -57,6 +59,8 @@ class IncludePage extends Component {
           onAdd={onAdd}
           onIngredientEntry={onEntry}
           isInclude={true}
+          onUnitEntry={onUnitEntry}
+          onAmountEntry={onAmountEntry}
         />
       </div>
     );

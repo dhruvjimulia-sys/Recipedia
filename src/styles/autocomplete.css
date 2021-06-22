@@ -11,8 +11,9 @@ input:focus {
   color: #444;
 }
 
-.dropd:focus {
-  border-radius: 10px 10px 0px 0px;
+.focusedfield {
+  border-radius: 10px 10px 0px 0px !important;
+  border: 1px solid #1727ae;
 }
 
 .autocomplete-items {
@@ -22,8 +23,8 @@ input:focus {
   z-index: 99;
   /*position the autocomplete items to be the same width as the container:*/
   top: 102%;
-  left: 0;
-  right: 0;
+  left: 2px;
+  right: 1.25%;
   max-height: 160px;
   overflow-y: auto;
 }
