@@ -123,14 +123,6 @@ class SideBar extends Component {
       : this.setState({ excludeIngredients: ingredients }, () =>
           this.renderValues()
         );
-    /*for (let i = 0; i < ingredients.length; i++) {
-      const ingredId = i + 1;
-      document.getElementById(
-        (this.state.includePage ? "include" : "exclude") +
-          "Ingredient " +
-          ingredId
-      ).value = ingredients[i].name;
-    }*/
   };
 
   renderValues = () => {
